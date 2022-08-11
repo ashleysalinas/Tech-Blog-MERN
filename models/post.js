@@ -6,9 +6,10 @@ const postSchema = new Schema({
         type: Date,
         default: () => new Date()
     },
-    userID: {
-        type: Number,
+    author: {
+        type: mongoose.Types.ObjectId,
         required: true,
+        ref: 'users',
     },
     postTitle: {
         type: String,
