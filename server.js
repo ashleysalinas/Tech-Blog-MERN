@@ -4,8 +4,9 @@ const app = express();
 const port = 3001;
 const postRoutes = require('./routes/post-routes');
 const cors = require('cors');
+require('dotenv').config({path:'./.env'})
 
-mongoose.connect('mongodb+srv://ashleysalinas:root@Cluster0.ja3k3.mongodb.net/TechBlogMERN?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useFindAndModify: false
 }) //replace with .env variables later
