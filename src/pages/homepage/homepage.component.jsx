@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-
+import PostList from '../../components/posts-list/posts-list.component';
 import getPosts from '../../utils/axios';
 
 const Homepage = () => {
 
     const [posts, setPosts] = useState([]);
-    console.log(posts);
 
     useEffect(() => {
         getPosts()
@@ -13,10 +12,10 @@ const Homepage = () => {
             const res = response.data
             setPosts(res)
         })
-    }, [])
+    }, []) // don't forget brackets at the end to prevent infinite rendering
 
     return(
-        <h2>This will be the homepage</h2>
+        <PostList posts={posts}/>
     )
 }
 
