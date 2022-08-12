@@ -1,7 +1,6 @@
 import Post from '../post/post.component';
 
 const PostList = ({ posts })=> {
-
       return(
         <div>
             {posts.map((post) => {

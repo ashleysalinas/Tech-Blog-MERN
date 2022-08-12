@@ -7,4 +7,5 @@ const getPosts = (query) => {
         console.log(err)
     }
 }
+
 export default getPosts;
