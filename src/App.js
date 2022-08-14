@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from './components/navigation/navigation.component'
 import Homepage from './pages/homepage/homepage.component';
 import Loginpage from './pages/loginpage/loginpage.component';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

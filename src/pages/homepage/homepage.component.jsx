@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PostList from '../../components/posts-list/posts-list.component';
-import getPosts from '../../utils/axios';
+import { getPosts } from '../../utils/axios';
 
 const Homepage = () => {
 

@@ -7,5 +7,12 @@ const getPosts = (query) => {
         console.log(err)
     }
 }
+const addUser = (formFields) => {
+    try {
+        return axios.post('http://localhost:3001/api/users', formFields)
+    } catch (err) {
+        console.log(err)
+    }
+}
 
-export default getPosts;
+export { getPosts, addUser };

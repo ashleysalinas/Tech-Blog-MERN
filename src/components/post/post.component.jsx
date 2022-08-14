@@ -3,7 +3,6 @@ import Moment from 'moment';
 const Post = ({ post }) => {
     const {postText, postTitle, date, creatorName } = post;
     const { firstName, lastName } = creatorName[0];
-    console.log(firstName);
     const newdate = date.toString()
     const formattedDate = Moment(newdate).format('DD-MM-YYYY');
 

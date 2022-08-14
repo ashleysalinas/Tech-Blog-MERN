@@ -1,6 +1,10 @@
+import Login from "../../components/login/login.component";
+
 const Loginpage = () => {
     return(
-        <h2>This will be the login page</h2>
+        <div>
+            <Login />
+        </div>
     )
 }
 
