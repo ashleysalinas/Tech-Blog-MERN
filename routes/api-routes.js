@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Post = require('../models/post');
 const User = require('../models/user');
 
+//finds all posts
 router.get('/api/posts', (req,res) => {
     //Creates seperate field of creatorName, which pulls data from Users collection where the document id matches the author id from the Post model. Is there an easier way to do this?
     Post.aggregate([{
@@ -18,6 +19,7 @@ router.get('/api/posts', (req,res) => {
     })
 })
 
+//add user
 router.post('/api/users', (req,res) => {
     console.log(req.body)
     try {
@@ -34,6 +36,19 @@ router.post('/api/users', (req,res) => {
     //add alert if account with email already exists
 })
 
-
-
+//find one user for sign in
+router.get('/api/users', (req,res) => {
+    const {email, password } = req.query
+    try {
+        User.find({
+            email: email,
+            password: password
+        })
+        .then(foundUser => {
+            res.json(foundUser)
+        })
+    } catch (err) {
+        res.err
+    }
+})
 module.exports = router;

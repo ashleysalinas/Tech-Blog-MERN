@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert'
 import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from "react";
-import { addUser } from '../../utils/axios';
+import { addUser, getUser } from '../../utils/axios';
 
 const Login = () => {
     const defaultFormFields = {
@@ -35,15 +35,25 @@ const Login = () => {
        addUser(formFields);
     }
     
+    const logIn = (event) => {
+        event.preventDefault();
+        const email = event.target[0].value
+        const password = event.target[1].value
+        getUser(email, password)
+        .then(res => {
+            console.log(res)
+        })
+    }
+
     return(
         <div>
             <h2>Login below</h2>
-            <form>
+            <form onSubmit={logIn}>
                 <label>Email:</label>
-                <input type="text"></input>
+                <input type="email" name='emailLogin'></input>
                 <label>Password:</label>
-                <input type="password"></input>
-                <button>Login</button>
+                <input type="password" name='passwordLogin'></input>
+                <button type='submit'>Login</button>
             </form>
             <h2>Don't have an account yet? Sign up <a onClick={handleShow}> here</a></h2>
 

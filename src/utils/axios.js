@@ -15,4 +15,17 @@ const addUser = (formFields) => {
     }
 }
 
-export { getPosts, addUser };
+const getUser = (email, password) => {
+    try {
+       return axios.get('http://localhost:3001/api/users',
+       {
+        params: {
+            email: email,
+            password: password
+       }
+       })
+    } catch (err) {
+        console.log(err)
+    }
+}
+export { getPosts, addUser, getUser };
