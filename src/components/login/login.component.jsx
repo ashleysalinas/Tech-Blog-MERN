@@ -2,8 +2,9 @@ import "./login.css";
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert'
 import Modal from 'react-bootstrap/Modal';
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { addUser, getUser } from '../../utils/axios';
+import { UserContext } from '../../contexts/user.context'
 
 const Login = () => {
     const defaultFormFields = {
@@ -16,8 +17,9 @@ const Login = () => {
 
     const [show, setShow] = useState(false);
     const [formFields, setFormFields] = useState(defaultFormFields)
+    const { currentUser, setCurrentUser } = useContext(UserContext)
     
-      const handleChange = (event) => {
+    const handleChange = (event) => {
         const { name, value } = event.target;
         setFormFields({...formFields, [name]: value})
     }
@@ -41,8 +43,11 @@ const Login = () => {
         const password = event.target[1].value
         getUser(email, password)
         .then(res => {
-            console.log(res)
+            const userData = res.data[0]
+            setCurrentUser(userData)
         })
+        //create alert when user not found
+        //create forgot password function?
     }
 
     return(
