@@ -28,4 +28,13 @@ const getUser = (email, password) => {
         console.log(err)
     }
 }
-export { getPosts, addUser, getUser };
+
+const getMyPosts = (currentUser) => {
+    try {
+        return axios.post('http://localhost:3001/api/myposts', currentUser)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export { getPosts, addUser, getUser, getMyPosts };

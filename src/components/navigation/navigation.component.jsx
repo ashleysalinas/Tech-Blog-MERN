@@ -13,7 +13,10 @@ function Navigation() {
         <Link to='home'>Home</Link>
         {
             currentUser ? (
+                <div>
+                <Link to='profile'>Profile</Link>
                 <span onClick={handleSignout}>Sign Out</span>
+                </div>
             ) : (
                 <Link to='login'>Login</Link>
             )

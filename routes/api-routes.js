@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Post = require('../models/post');
 const User = require('../models/user');
+var mongoose = require('mongoose')
 
 //finds all posts
 router.get('/api/posts', (req,res) => {
@@ -21,7 +22,6 @@ router.get('/api/posts', (req,res) => {
 
 //add user
 router.post('/api/users', (req,res) => {
-    console.log(req.body)
     try {
         User.create({
             firstName: req.body.firstName,
@@ -49,6 +49,22 @@ router.get('/api/users', (req,res) => {
         })
     } catch (err) {
         res.err
+    }
+})
+
+router.post('/api/myposts', (req,res) => {
+    const { _id } = req.body
+    const userId = mongoose.Types.ObjectId(_id)
+
+    try {
+        Post.find({
+            author: userId,
+        })
+        .then(posts => {
+            res.json(posts)
+        })
+    } catch (err) {
+
     }
 })
 module.exports = router;
