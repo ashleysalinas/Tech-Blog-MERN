@@ -86,4 +86,18 @@ router.post('/api/newpost', (req,res) => {
         console.log(err)
     }
 })
+//delete user post
+router.delete('/api/delete', async (req,res) => {
+    console.log(req.query)
+    const postID = req.query._id
+    const userID = req.query.userID
+    try {
+        await Post.deleteOne({_id:postID});
+        const newPosts = await Post.find({author: userID})
+        res.json(newPosts)
+    } catch(err) {
+        console.log(err)
+    }
+    
+})
 module.exports = router;

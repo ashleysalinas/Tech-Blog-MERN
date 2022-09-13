@@ -42,7 +42,7 @@ const Login = () => {
        .then(res => {
         const userData = res.data;
         setCurrentUser(userData)
-        navigate('profile')
+        navigate('profile', { replace: true })
        });
        //navigate('home')
     }

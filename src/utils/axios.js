@@ -46,4 +46,19 @@ const addPost = (newPostInfo) => {
     }
 }
 
-export { getPosts, addUser, getUser, getMyPosts, addPost };
+const deletePost = (_id, userID) => {
+    try {
+         return axios.delete('http://localhost:3001/api/delete', {
+            method: 'delete',
+            params: {
+                _id,
+                userID
+            }
+        })
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+
+export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost };
