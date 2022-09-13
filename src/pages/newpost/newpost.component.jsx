@@ -1,9 +1,11 @@
 import { addPost } from '../../utils/axios';
 import { UserContext } from '../../contexts/user.context';
-import { useState, useEffect, useContext } from 'react'
-import { eventWrapper } from '@testing-library/user-event/dist/utils';
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 const NewPost = () => {
     const { currentUser } = useContext(UserContext) //get user id to attach to post
+    const navigate = useNavigate()
 
     const [newPost, setNewPost] = useState({
         postTitle: '',
@@ -21,6 +23,7 @@ const NewPost = () => {
         const { _id } = currentUser; //pulls user id to attach to post
         const newPostInfo = {newPost, _id} //object just makes it easier to pass through
         addPost(newPostInfo)
+        navigate('home')
     };
 
     return(

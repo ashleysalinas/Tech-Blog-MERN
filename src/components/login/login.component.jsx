@@ -4,9 +4,12 @@ import Alert from 'react-bootstrap/Alert'
 import Modal from 'react-bootstrap/Modal';
 import { useState, useContext } from "react";
 import { addUser, getUser } from '../../utils/axios';
-import { UserContext } from '../../contexts/user.context'
+import { UserContext } from '../../contexts/user.context';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();// redirect after successful login/signup
+
     const defaultFormFields = {
         firstName: '',
         lastName: '',
@@ -28,16 +31,23 @@ const Login = () => {
         setShow(true)
     }
     const handleClose = () => setShow(false);
-    const signUp = (event) => {
+
+    const signUp = async (event) => {
         event.preventDefault()
         const { firstName, lastName, email, password, confirmPassword} = formFields;
        if (password !== confirmPassword) {
            //add alert later
        }
-       addUser(formFields);
+       addUser(formFields)
+       .then(res => {
+        const userData = res.data;
+        setCurrentUser(userData)
+        navigate('profile')
+       });
+       //navigate('home')
     }
-    
-    const logIn = (event) => {
+    //add functionality for existing user
+    const logIn = async (event) => {
         event.preventDefault();
         const email = event.target[0].value
         const password = event.target[1].value
@@ -45,7 +55,9 @@ const Login = () => {
         .then(res => {
             const userData = res.data[0]
             setCurrentUser(userData)
+            navigate('profile')
         })
+
         //create alert when user not found
         //create forgot password function?
     }

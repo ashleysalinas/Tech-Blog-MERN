@@ -28,6 +28,8 @@ router.post('/api/users', (req,res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password
+        }).then(newUser => {
+            res.json(newUser)
         })
     } catch (err) {
         console.log(err)

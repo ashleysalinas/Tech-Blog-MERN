@@ -1,14 +1,18 @@
 import { Fragment, useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { UserContext } from '../../contexts/user.context'
 
 function Navigation() {
-    const { currentUser, setCurrentUser } = useContext(UserContext)
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+    let navigate = useNavigate();
 
     const handleSignout = () => {
+        
         setCurrentUser(null)
         //redirect to homepage
+        navigate.push('home')
     }
+
     return(
        <Fragment>
         <Link to='home'>Home</Link>
