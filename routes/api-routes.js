@@ -42,12 +42,13 @@ router.post('/api/users', (req,res) => {
 router.get('/api/users', (req,res) => {
     const {email, password } = req.query
     try {
-        User.find({
+        User.findOne({
             email: email,
             password: password
         })
-        .then(foundUser => {
-            res.json(foundUser)
+        .then(
+        result => {
+            res.json(result)
         })
     } catch (err) {
         res.err
