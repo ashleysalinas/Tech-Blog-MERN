@@ -42,7 +42,7 @@ const Login = () => {
        .then(res => {
         const userData = res.data;
         setCurrentUser(userData)
-        navigate('profile', { replace: true })
+        navigate('/redirect/profile')
        });
        //navigate('home')
     }
@@ -55,7 +55,7 @@ const Login = () => {
         .then(res => {
             const userData = res.data[0]
             setCurrentUser(userData)
-            navigate('profile')
+            navigate('/redirect/profile')
         })
 
         //create alert when user not found

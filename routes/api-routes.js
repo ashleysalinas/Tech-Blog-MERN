@@ -88,7 +88,6 @@ router.post('/api/newpost', (req,res) => {
 })
 //delete user post
 router.delete('/api/delete', async (req,res) => {
-    console.log(req.query)
     const postID = req.query._id
     const userID = req.query.userID
     try {

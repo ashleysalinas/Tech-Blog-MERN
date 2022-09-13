@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Navigation from './components/navigation/navigation.component'
 import Homepage from './pages/homepage/homepage.component';
@@ -16,6 +16,8 @@ const App = () => {
         <Route path ='profile' element={<Profile />}/>
         <Route path ='newpost' element={<NewPost />}/>
         <Route path ='*' element={<Homepage />}/>
+        <Route path='redirect' element={<Navigate to='/' />} />
+        <Route path='redirect/profile' element={<Navigate to='/profile' />} />
       </Route>
     </Routes>
   );

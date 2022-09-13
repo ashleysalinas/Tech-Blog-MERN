@@ -12,7 +12,7 @@ const Homepage = () => {
             const res = response.data
             setPosts(res)
         })
-    }, []) // don't forget brackets at the end to prevent infinite rendering
+    }, [posts]) // don't forget brackets at the end to prevent infinite rendering
 
     return(
         <PostList posts={posts}/>

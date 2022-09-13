@@ -23,7 +23,7 @@ const NewPost = () => {
         const { _id } = currentUser; //pulls user id to attach to post
         const newPostInfo = {newPost, _id} //object just makes it easier to pass through
         addPost(newPostInfo)
-        navigate('home')
+        navigate('/redirect')
     };
 
     return(

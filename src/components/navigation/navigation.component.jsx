@@ -10,7 +10,7 @@ function Navigation() {
         
         setCurrentUser(null)
         //redirect to homepage
-        navigate.push('home')
+        navigate('/redirect')
     }
 
     return(
