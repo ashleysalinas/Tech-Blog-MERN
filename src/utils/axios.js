@@ -1,15 +1,16 @@
+import env from 'react-dotenv'
 import axios from 'axios';
 
 const getPosts = (query) => {
     try {
-        return axios.get('http://localhost:3001/api/posts')
+        return axios.get(`http://localhost:${env.PORT}/api/posts`)
     } catch (err) {
         console.log(err)
     }
 }
 const addUser = (formFields) => {
     try {
-        return axios.post('http://localhost:3001/api/users', formFields)
+        return axios.post(`http://localhost:3001/api/users`, formFields)
     } catch (err) {
         console.log(err)
     }
@@ -17,7 +18,7 @@ const addUser = (formFields) => {
 
 const getUser = (email, password) => {
     try {
-       return axios.get('http://localhost:3001/api/users',
+       return axios.get(`http://localhost:3001/api/users`,
        {
         params: {
             email: email,
@@ -31,10 +32,18 @@ const getUser = (email, password) => {
 
 const getMyPosts = (currentUser) => {
     try {
-        return axios.post('http://localhost:3001/api/myposts', currentUser)
+        return axios.post(`http://localhost:3001/api/myposts`, currentUser)
     } catch (err) {
         console.log(err)
     }
 }
 
-export { getPosts, addUser, getUser, getMyPosts };
+const addPost = (newPostInfo) => {
+    try {
+        return axios.post('http://localhost:3001/api/newpost', newPostInfo)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export { getPosts, addUser, getUser, getMyPosts, addPost };

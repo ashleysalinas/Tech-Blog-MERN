@@ -7,6 +7,7 @@ function Navigation() {
 
     const handleSignout = () => {
         setCurrentUser(null)
+        //redirect to homepage
     }
     return(
        <Fragment>
@@ -15,6 +16,7 @@ function Navigation() {
             currentUser ? (
                 <div>
                 <Link to='profile'>Profile</Link>
+                <Link to='newpost'> + </Link>
                 <span onClick={handleSignout}>Sign Out</span>
                 </div>
             ) : (

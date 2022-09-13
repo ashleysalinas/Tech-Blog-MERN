@@ -51,7 +51,7 @@ router.get('/api/users', (req,res) => {
         res.err
     }
 })
-
+//Find posts from logged-in user
 router.post('/api/myposts', (req,res) => {
     const { _id } = req.body
     const userId = mongoose.Types.ObjectId(_id)
@@ -65,6 +65,23 @@ router.post('/api/myposts', (req,res) => {
         })
     } catch (err) {
 
+    }
+})
+
+//add new post
+router.post('/api/newpost', (req,res) => {
+    const {newPost: {postTitle} = {}} = req.body //destructures postTitle
+    const {newPost: {postText} = {}} = req.body //destructures postTitle
+    const { _id } = req.body
+    const userId = mongoose.Types.ObjectId(_id) //shouldn't have used this object type in the models, won't do next time
+    try {
+        Post.create({
+            postTitle: postTitle,
+            postText: postText,
+            author: userId
+        })
+    } catch (err) {
+        console.log(err)
     }
 })
 module.exports = router;

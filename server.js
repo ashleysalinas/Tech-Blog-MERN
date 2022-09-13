@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-const port = 3001;
 const apiRoutes = require('./routes/api-routes');
 const cors = require('cors');
 require('dotenv').config({path:'./.env'})
@@ -9,7 +8,7 @@ require('dotenv').config({path:'./.env'})
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useFindAndModify: false
-}) //replace with .env variables later
+})
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +17,6 @@ app.use(cors())
 app.use(apiRoutes);
 app.use(express.static("public"));
 
-app.listen(port, () => {
-    console.log(`Server running on ${port}`)
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on ${process.env.PORT}`)
 })
