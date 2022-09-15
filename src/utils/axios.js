@@ -60,5 +60,19 @@ const deletePost = (_id, userID) => {
     }
 }
 
+const updatePost = ({newTitle, newText, _id}) => {
+    try {
+        return axios.post('http://localhost:3001/api/update',
+            {
+                _id,
+                newTitle,
+                newText
+            }
+        )
+    } catch (err) {
+        console.log(err)
+    }
+}
 
-export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost };
+
+export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost };

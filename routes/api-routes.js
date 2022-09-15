@@ -4,9 +4,9 @@ const User = require('../models/user');
 var mongoose = require('mongoose')
 
 //finds all posts
-router.get('/api/posts', (req,res) => {
+router.get('/api/posts', async (req,res) => {
     //Creates seperate field of creatorName, which pulls data from Users collection where the document id matches the author id from the Post model. Is there an easier way to do this?
-    Post.aggregate([{
+    await Post.aggregate([{
         $lookup: {
             from: "users",
             localField: "author",
@@ -21,9 +21,9 @@ router.get('/api/posts', (req,res) => {
 })
 
 //add user
-router.post('/api/users', (req,res) => {
+router.post('/api/users', async (req,res) => {
     try {
-        User.create({
+        await User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
@@ -39,10 +39,10 @@ router.post('/api/users', (req,res) => {
 })
 
 //find one user for sign in
-router.get('/api/users', (req,res) => {
+router.get('/api/users', async (req,res) => {
     const {email, password } = req.query
     try {
-        User.findOne({
+        await User.findOne({
             email: email,
             password: password
         })
@@ -55,12 +55,12 @@ router.get('/api/users', (req,res) => {
     }
 })
 //Find posts from logged-in user
-router.post('/api/myposts', (req,res) => {
+router.post('/api/myposts', async (req,res) => {
     const { _id } = req.body
     const userId = mongoose.Types.ObjectId(_id)
 
     try {
-        Post.find({
+        await Post.find({
             author: userId,
         })
         .then(posts => {
@@ -72,13 +72,13 @@ router.post('/api/myposts', (req,res) => {
 })
 
 //add new post
-router.post('/api/newpost', (req,res) => {
+router.post('/api/newpost', async (req,res) => {
     const {newPost: {postTitle} = {}} = req.body //destructures postTitle
     const {newPost: {postText} = {}} = req.body //destructures postTitle
     const { _id } = req.body
     const userId = mongoose.Types.ObjectId(_id) //shouldn't have used this object type in the models, won't do next time
     try {
-        Post.create({
+        await Post.create({
             postTitle: postTitle,
             postText: postText,
             author: userId
@@ -98,6 +98,20 @@ router.delete('/api/delete', async (req,res) => {
     } catch(err) {
         console.log(err)
     }
-    
+})
+
+//update post
+
+router.post('/api/update', async (req, res) => {
+   const { _id, newTitle, newText } = req.body
+   const postId = mongoose.Types.ObjectId(_id)
+   try {
+    await Post.findOneAndUpdate({ _id: postId } , {
+        postTitle: newTitle,
+        postText: newText
+    })
+   } catch (err) {
+    console.log(err)
+   }
 })
 module.exports = router;
