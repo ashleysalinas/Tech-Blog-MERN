@@ -38,6 +38,7 @@ const postSeed = [
         postText: 'I said what I said'
     }
 ] 
+
 //Why did I have to delete premade User collection??? This function automatically made a seperate collection called 'users'
 userDB.collection.insertMany(userSeed)
 .then(console.log('Inserted users successfully!'))
