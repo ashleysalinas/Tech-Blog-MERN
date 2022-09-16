@@ -6,15 +6,20 @@ import Loginpage from './pages/loginpage/loginpage.component';
 import Profile from './pages/profile/profile.component';
 import NewPost from './pages/newpost/newpost.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PrivateRoute from './utils/PrivateRoute';
 
 const App = () => {
+
+
   return (
     <Routes>
       <Route path='/' element={<Navigation />}>
         <Route index element={<Homepage />}/>
         <Route path ='login' element={<Loginpage />}/>
-        <Route path ='profile' element={<Profile />}/>
-        <Route path ='newpost' element={<NewPost />}/>
+        <Route element={<PrivateRoute />}>
+            <Route path ='profile' element={<Profile />} />
+            <Route path ='newpost' element={<NewPost />}/>
+        </Route>
         <Route path ='*' element={<Homepage />}/>
         <Route path='redirect' element={<Navigate to='/' />} />
         <Route path='redirect/profile' element={<Navigate to='/profile' />} />

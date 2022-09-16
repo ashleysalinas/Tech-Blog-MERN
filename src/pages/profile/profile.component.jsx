@@ -1,8 +1,8 @@
 import { getMyPosts, deletePost } from "../../utils/axios";
 import { useEffect, useContext, useState, } from 'react';
 import { UserContext } from '../../contexts/user.context';
-import EditModal from './editModal.component'
-
+import EditModal from './editModal.component';
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
     const { currentUser } = useContext(UserContext);
@@ -10,6 +10,7 @@ const Profile = () => {
     const [ myPosts, setMyPosts ] = useState([]);
     const [ showModal, setShowModal ] = useState(false);
     const [ postData, setPostData ] = useState({});
+    const navigate = useNavigate();
 
     const closeModal = async () => {
         setShowModal(false)
@@ -22,7 +23,6 @@ const Profile = () => {
     const openModal = () => {
         setShowModal(true)
     }
-
     useEffect(() => {
         getMyPosts(currentUser)
         .then(res => {
