@@ -74,5 +74,13 @@ const updatePost = ({newTitle, newText, _id}) => {
     }
 }
 
+const grabComments = (id) => {
+    try {
+        return axios.post('http://localhost:3001/api/comment', {id})
+    } catch (err) {
+        console.log(err)
+    }
+}
 
-export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost };
+
+export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments };

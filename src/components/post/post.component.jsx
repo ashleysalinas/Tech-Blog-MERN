@@ -1,15 +1,16 @@
 import Moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const Post = ({ post }) => {
-    const {postText, postTitle, date, creatorName } = post;
+    const {postText, postTitle, date, creatorName, _id } = post;
     const { firstName, lastName } = creatorName[0];
     const newdate = date.toString()
     const formattedDate = Moment(newdate).format('DD-MM-YYYY');
 
     return(
         <div>
-            <h3>{postTitle}</h3>
-            <h3>Posted by {firstName} {lastName} on {formattedDate}</h3>
+            <Link to={'/post/' + _id}>{postTitle}</Link>
+            <p>Posted by {firstName} {lastName} on {formattedDate}</p>
             <p>{postText}</p>
         </div>
     )

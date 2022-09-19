@@ -62,8 +62,8 @@ router.post('/api/myposts', async (req,res) => {
     try {
         await Post.find({
             author: userId,
-        })
-        .then(posts => {
+        }
+   ).then(posts => {
             res.json(posts)
         })
     } catch (err) {
@@ -114,4 +114,42 @@ router.post('/api/update', async (req, res) => {
     console.log(err)
    }
 })
+
+//get comments for post
+router.post('/api/comment', async (req,res) => {
+    const { id } = req.body;
+    const postId = mongoose.Types.ObjectId(id);
+     try {
+        await Post.aggregate([
+            {
+            $match: {
+                _id: postId
+            }
+        },
+        { $lookup: {
+            from: "users",
+            localField: "author",
+            foreignField: "_id",
+            as: "creatorName"
+        }},
+        {
+            $lookup: {
+            from: "comments",
+            localField: "_id",
+            foreignField: "post",
+            as: "postComments",
+             pipeline: [{$lookup: {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                as: "commenterUsername"
+            }}] 
+        }}
+    ]).then(post => res.json(post))
+    } catch (err) {
+        console.log(err)
+    }
+    }
+)
+
 module.exports = router;
