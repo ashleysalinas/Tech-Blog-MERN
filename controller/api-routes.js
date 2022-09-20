@@ -170,4 +170,46 @@ router.post('/api/newcomment', async (req, res) => {
     }
 })
 
+//delete comment
+router.delete('/api/deletecomment', async (req,res) => {
+    const {_id: commentID } = req.query
+    const { postID: postID } = req.query
+
+    try {
+        await Comment.deleteOne({
+            _id: commentID
+        })
+
+        const newComments = await Post.aggregate([
+            {
+            $match: {
+                _id: postID
+            }
+        },
+        { $lookup: {
+            from: "users",
+            localField: "author",
+            foreignField: "_id",
+            as: "creatorName"
+        }},
+        {
+            $lookup: {
+            from: "comments",
+            localField: "_id",
+            foreignField: "post",
+            as: "postComments",
+             pipeline: [{$lookup: {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                as: "commenterUsername"
+            }}] 
+        }}
+    ])
+    res.json(newComments)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 module.exports = router;

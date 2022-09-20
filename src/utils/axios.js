@@ -91,4 +91,14 @@ const addComment = (id, userID, value) => {
     }
 }
 
-export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments, addComment };
+const deleteComment = ({_id, postID}) => {
+    try {
+        return axios.delete('http://localhost:3001/api/deletecomment', {
+            params:{_id, postID}
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments, addComment, deleteComment };

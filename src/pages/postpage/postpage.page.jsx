@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { grabComments } from '../../utils/axios';
+import { grabComments, deleteComment } from '../../utils/axios';
 import { UserContext } from '../../contexts/user.context';
 import AddCommentModal from './addCommentModal.component';
 import Moment from 'moment';
@@ -11,6 +11,7 @@ const PostPage = () => {
     const navigate = useNavigate();
 
     const { currentUser } = useContext(UserContext);
+
     const [post, setPost] = useState({});
     const [creator, setCreator] = useState('');
     const [comments, setComments] = useState([]);
@@ -51,30 +52,43 @@ const PostPage = () => {
     const redirectLogin = () => {
         navigate('/login')
     }
+
+    const deleteCommentHandler = (_id) => {
+        const postID = id
+        deleteComment({_id, postID})
+         .then(res => {
+            const newComments = res.data;
+            setComments(newComments)
+        })
+    }
     
     return(
+        <>
        <div>
         <h1>{postTitle}</h1>
         <h2>By: {creator}</h2>
         <p>{postText}</p>
         <div>
         <p>Comments ({comments == null ? "0" : comments.length})</p>
-        {currentUser ? <button onClick={addCommentFunc}> + </button> : <button onClick={redirectLogin}>Login to comment</button>}
+        {currentUser ? <div><button onClick={addCommentFunc}> + </button> <AddCommentModal show={show} closeModal={closeModal} id={id} userID={currentUser._id}/> </div>: <button onClick={redirectLogin}>Login to comment</button>}
         </div>
-        <AddCommentModal show={show} closeModal={closeModal} id={id} userID={currentUser._id}/>
+        
        
        {comments.map(comment => {
         const {_id, commentText, commenterUsername, date} = comment
+        const commenterID = commenterUsername[0]._id
         const newdate = date.toString()
         const formattedDate = Moment(newdate).format('MM-DD-YYYY');
         return(
             <div key={_id}>
                 <p>{commentText}</p>
                 <p>Sent By {commenterUsername[0].firstName} {commenterUsername[0].lastName} on {formattedDate}</p>
+                { currentUser && currentUser._id === commenterID ? <button onClick={() => {deleteCommentHandler( _id)}}>Delete</button> : <p></p> }
             </div>
         )
        })}
        </div>
+       </>
     )
 }
 
