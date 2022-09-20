@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const commentSchema = new Schema({
     date: {
         type: Date,
-        default: () => new Data()
+        default: () => new Date()
     },
     post: {
         type: mongoose.Types.ObjectId,

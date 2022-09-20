@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Post = require('../models/post');
 const User = require('../models/user');
+const Comment = require('../models/comment');
 var mongoose = require('mongoose')
 
 //finds all posts
@@ -151,5 +152,22 @@ router.post('/api/comment', async (req,res) => {
     }
     }
 )
+
+//add comment
+router.post('/api/newcomment', async (req, res) => {
+    const { id, userID, value } = req.body;
+    const postID = mongoose.Types.ObjectId(id);
+    const newUserID = mongoose.Types.ObjectId(userID);
+
+    try {
+        await Comment.create({
+            post: postID,
+            user: newUserID,
+            commentText: value
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
 
 module.exports = router;

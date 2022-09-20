@@ -2,7 +2,8 @@ import { getMyPosts, deletePost } from "../../utils/axios";
 import { useEffect, useContext, useState, } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import EditModal from './editModal.component';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import Moment from 'moment';
 
 const Profile = () => {
     const { currentUser } = useContext(UserContext);
@@ -44,17 +45,20 @@ const Profile = () => {
         openModal();
         setPostData(post)
     }
-    console.log(myPosts)
+
     return(
         <>
         <div>
             <h1>My Posts</h1>
             {myPosts.map((post) => {
-                const { postTitle, postText, _id} = post
+                const { postTitle, postText, _id, date} = post
+                const newdate = date.toString()
+                const formattedDate = Moment(newdate).format('MM-DD-YYYY');
                 return (
                     <>
                     <div key={_id}>
                         <Link to={'/post/' + _id}>{postTitle}</Link>
+                        <p>Posted on {formattedDate}</p>
                         <h2>{postText}</h2>
                         <button onClick={() => editThisPost(post)}>Edit</button>
                         <button onClick={() => deleteThisPost(_id)}>X</button>

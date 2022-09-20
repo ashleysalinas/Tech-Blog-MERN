@@ -17,11 +17,13 @@ const EditModal = ({show, closeModal, postData}) => {
         <Modal.Header closeButton>
             <Modal.Title>Edit Post</Modal.Title>
         </Modal.Header>
-        <form onSubmit={handleSubmit}>
+       <Modal.Body>
+       <form onSubmit={handleSubmit}>
            <textarea name='newTitle' defaultValue={postTitle}></textarea>
            <textarea name='newText' defaultValue={postText}></textarea>
            <button type='submit'>Edit</button>
         </form>
+       </Modal.Body>
     </Modal>
     )
 }
