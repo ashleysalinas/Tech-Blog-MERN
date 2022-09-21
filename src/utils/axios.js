@@ -101,4 +101,16 @@ const deleteComment = ({_id, postID}) => {
     }
 }
 
-export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments, addComment, deleteComment };
+const getUserProfile = (id) => {
+    try {
+        return axios.get('http://localhost:3001/api/getuserprofile', {
+            params: {
+                userID: id
+            }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments, addComment, deleteComment, getUserProfile };

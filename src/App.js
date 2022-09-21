@@ -8,7 +8,7 @@ import NewPost from './pages/newpost/newpost.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PrivateRoute from './utils/PrivateRoute';
 import PostPage from './pages/postpage/postpage.page';
-
+import UserPage from './pages/user/user.page';
 const App = () => {
 
 
@@ -22,6 +22,7 @@ const App = () => {
             <Route path ='newpost' element={<NewPost />}/>
         </Route>
         <Route path='post/:id' element={<PostPage />}/>
+        <Route path='user/:id' element={<UserPage />}/>
         <Route path ='*' element={<Homepage />}/>
         <Route path='redirect' element={<Navigate to='/' />} />
         <Route path='redirect/profile' element={<Navigate to='/profile' />} />

@@ -212,4 +212,24 @@ router.delete('/api/deletecomment', async (req,res) => {
     }
 })
 
+router.get('/api/getuserprofile' , async (req, res) => {
+    const { userID: id} = req.query;
+    const userIDObject = mongoose.Types.ObjectId(id);
+
+    await User.aggregate([
+       {
+        $match:{
+            _id: userIDObject
+        }  
+       },
+       {
+        $lookup: {
+            from: 'posts',
+            localField: "_id",
+            foreignField: "author",
+            as: "userPosts"
+        }
+       }]).then(user => res.json(user))
+    })
+
 module.exports = router;
