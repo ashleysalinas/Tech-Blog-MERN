@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PostList from '../../components/posts-list/posts-list.component';
 import { getPosts } from '../../utils/axios';
+import '../../styles.scss'
 
 const Homepage = () => {
 
@@ -15,7 +16,9 @@ const Homepage = () => {
     }, [posts]) // don't forget brackets at the end to prevent infinite rendering
 
     return(
-        <PostList posts={posts}/>
+        <div>
+            <PostList posts={posts}/>
+        </div>
     )
 }
 

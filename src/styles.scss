@@ -1,0 +1,19 @@
+$secondary-color: #c94c4c;
+$tertiary-color: #c83349;
+
+@mixin theme {
+    background-color: #f7cac9;
+    color: black;
+    font-family: "Monaco", monospace;
+}
+
+* {
+    @include theme;
+    a {
+        text-decoration: none;
+        color: $secondary-color;
+    }
+    a:hover {
+        color: $tertiary-color
+    }
+}

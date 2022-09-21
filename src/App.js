@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PrivateRoute from './utils/PrivateRoute';
 import PostPage from './pages/postpage/postpage.page';
 import UserPage from './pages/user/user.page';
+import './styles.scss'
 const App = () => {
 
 
