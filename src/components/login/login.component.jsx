@@ -22,7 +22,6 @@ const Login = () => {
     const [showLoginAlert, setShowLoginAlert] = useState(false)
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { setCurrentUser } = useContext(UserContext);
-    const [ alertText, setAlertText ] = useState('');
     
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -50,10 +49,11 @@ const Login = () => {
         const password = event.target[1].value
         getUser(email, password)
        .then(res => {
-        if (res.data == null) { //no user match
+        if (res.data === 'no') { //no user or password match
             setShowLoginAlert(true) 
         } else {
             let userData = res.data
+            window.localStorage.setItem('session-user', JSON.stringify(userData))
             setCurrentUser(userData)
             navigate('/redirect/profile') 
         }

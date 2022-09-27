@@ -14,6 +14,7 @@ const UserPage = () => {
     useEffect(() => {
         getUserProfile(id)
         .then(res => {
+            console.log(res)
             setUser(res.data[0])
             setUserPosts(res.data[0].userPosts)
         })

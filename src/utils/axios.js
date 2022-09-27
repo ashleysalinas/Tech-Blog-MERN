@@ -113,4 +113,11 @@ const getUserProfile = (id) => {
     }
 }
 
-export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments, addComment, deleteComment, getUserProfile };
+const logout = () => {
+    try {
+        return axios.delete('http://localhost:3001/api/logout')
+    } catch (err) {
+        console.log(err)
+    }
+}
+export { getPosts, addUser, getUser, getMyPosts, addPost, deletePost, updatePost, grabComments, addComment, deleteComment, getUserProfile, logout };

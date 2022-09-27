@@ -10,13 +10,14 @@ const Homepage = () => {
     useEffect(() => {
         getPosts()
         .then(response => {
-            const res = response.data
+            let res = response.data
+            res = res.reverse()
             setPosts(res)
         })
     }, [posts]) // don't forget brackets at the end to prevent infinite rendering
 
     return(
-        <div>
+        <div className='homepage'>
             <PostList posts={posts}/>
         </div>
     )

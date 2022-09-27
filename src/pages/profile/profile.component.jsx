@@ -2,7 +2,7 @@ import { getMyPosts, deletePost } from "../../utils/axios";
 import { useEffect, useContext, useState, } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import EditModal from './editModal.component';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'moment';
 
 const Profile = () => {
@@ -11,14 +11,14 @@ const Profile = () => {
     const [ myPosts, setMyPosts ] = useState([]);
     const [ showModal, setShowModal ] = useState(false);
     const [ postData, setPostData ] = useState({});
-    const navigate = useNavigate();
 
     const closeModal = async () => {
         setShowModal(false)
         await getMyPosts(currentUser)
         .then(res => {
-            const { data } = res
-            setMyPosts(data)
+            let posts = res.data
+            posts = posts.reverse()
+            setMyPosts(posts)
         }) 
     }
     const openModal = () => {
@@ -27,8 +27,9 @@ const Profile = () => {
     useEffect(() => {
         getMyPosts(currentUser)
         .then(res => {
-            const { data } = res
-            setMyPosts(data)
+            let posts = res.data
+            posts = posts.reverse()
+            setMyPosts(posts)
         })
     }, [])
     
@@ -50,7 +51,8 @@ const Profile = () => {
         <>
         <div>
             <h1>My Posts</h1>
-            {myPosts.map((post) => {
+            {myPosts.length === 0 ? <p>No posts yet. Make your first one <Link to='/newpost'>here</Link>!</p> : 
+            myPosts.map((post) => {
                 const { postTitle, postText, _id, date} = post
                 const newdate = date.toString()
                 const formattedDate = Moment(newdate).format('MM-DD-YYYY');
@@ -65,8 +67,9 @@ const Profile = () => {
                     </div>
                     <EditModal show={showModal} closeModal={closeModal} postData={postData}/>
                     </>
-                )
-            })}
+                    )
+                })
+        }
         </div>
         </>
     )

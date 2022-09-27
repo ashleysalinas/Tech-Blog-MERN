@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { createContext, useState } from 'react'
 
 export const UserContext = createContext(
@@ -8,6 +9,11 @@ export const UserContext = createContext(
 );
 
 export const UserProvider = ({children}) => {
+    useEffect(() => {
+        const sessionUser = JSON.parse(window.localStorage.getItem('session-user'))
+        console.log(sessionUser)
+        setCurrentUser(sessionUser)
+    }, [])
     const [currentUser, setCurrentUser] = useState(null);
     const value = {currentUser, setCurrentUser}
 

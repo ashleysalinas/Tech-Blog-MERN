@@ -26,7 +26,8 @@ const PostPage = () => {
         .then(res => {
             const post = res.data[0]
             setPost(post)
-            setComments(post.postComments)
+            let comments = post.postComments.reverse()
+            setComments(comments)
             setCreator(post.creatorName[0].firstName + ' ' + post.creatorName[0].lastName) //is there a cleaner way to do this?
         })
     }, [])

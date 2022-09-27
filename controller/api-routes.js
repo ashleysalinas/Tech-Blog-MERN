@@ -2,7 +2,8 @@ const router = require('express').Router();
 const Post = require('../models/post');
 const User = require('../models/user');
 const Comment = require('../models/comment');
-var mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 //finds all posts
 router.get('/api/posts', async (req,res) => {
@@ -41,16 +42,30 @@ router.post('/api/users', async (req,res) => {
 
 //find one user for sign in
 router.get('/api/users', async (req,res) => {
-    const {email, password } = req.query
+    const {email, password } = req.query;
     try {
-        await User.findOne({
-            email: email,
-            password: password
+        const user = await User.findOne({
+            email: email
         })
-        .then(
-        result => {
-            res.json(result)
-        })
+        if (!user) {
+            return res.json('no')
+        } //no email found
+
+        if (!bcrypt.compareSync(password, user.password)) {
+            return res.json('no')
+        } //no password
+
+         const sessUser = {
+            _id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+        }
+        res.json(sessUser)
+        req.session.save(() => {
+            req.session.user_id = sessUser._id,
+            req.session.logged_in = true
+        }).then((err) => {if (err) throw err})
     } catch (err) {
         res.err
     }
@@ -232,4 +247,11 @@ router.get('/api/getuserprofile' , async (req, res) => {
        }]).then(user => res.json(user))
     })
 
+ router.delete('/api/logout', (req,res) => {
+    req.session.destroy((err) => {
+        if (err) throw (err);
+        res.clearCookie('session-id');
+        res.send('Logged out successfully')
+    })
+})
 module.exports = router;

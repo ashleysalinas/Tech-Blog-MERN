@@ -14,12 +14,11 @@ const Post = ({ post }) => {
 
     return(
         <div className='post'>
-            <div className="postLink">
+            <div className="postHeader">
             <Link to={'/post/' + _id}>{postTitle}</Link>
+            <p id='postTitle'>Posted by <Link to={currentUser && currentUser._id === creatorID ? '/profile' : '/user/' + creatorID}>{firstName} {lastName}</Link> on {formattedDate}</p>
             </div>
-            
-            <p className='postHeader'>Posted by <Link to={currentUser && currentUser._id === creatorID ? '/profile' : '/user/' + creatorID}>{firstName} {lastName}</Link> on {formattedDate}</p>
-            <p>{postText}</p>
+            <p className='postText'>{postText}</p>
         </div>
     )
 }
