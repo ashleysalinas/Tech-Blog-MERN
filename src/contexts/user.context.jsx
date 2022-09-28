@@ -11,8 +11,10 @@ export const UserContext = createContext(
 export const UserProvider = ({children}) => {
     useEffect(() => {
         const sessionUser = JSON.parse(window.localStorage.getItem('session-user'))
-        console.log(sessionUser)
-        setCurrentUser(sessionUser)
+        if (sessionUser) {
+            setCurrentUser(sessionUser)
+        }
+        
     }, [])
     const [currentUser, setCurrentUser] = useState(null);
     const value = {currentUser, setCurrentUser}

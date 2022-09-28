@@ -24,16 +24,19 @@ router.get('/api/posts', async (req,res) => {
 
 //add user
 router.post('/api/users', async (req,res) => {
+    const { firstName, lastName, email, password } = req.body;
     try {
-        await User.create({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password
-        }).then(newUser => {
-            res.json(newUser)
+        const newUser = await User.create({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
         })
+        res.json(newUser)
     } catch (err) {
+        if (err.code == 11000) {
+            res.json('email exists')
+        }
         console.log(err)
     }
 

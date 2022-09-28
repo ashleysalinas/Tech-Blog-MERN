@@ -19,7 +19,8 @@ const Login = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [showSignupAlert, setShowSignupAlert] = useState(false);
-    const [showLoginAlert, setShowLoginAlert] = useState(false)
+    const [showEmailAlert, setShowEmailAlert] = useState(false);
+    const [showLoginAlert, setShowLoginAlert] = useState(false);
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { setCurrentUser } = useContext(UserContext);
     
@@ -37,9 +38,14 @@ const Login = () => {
        } else {
         addUser(formFields)
         .then(res => {
-         const userData = res.data;
-         setCurrentUser(userData)
-         navigate('/redirect/profile')
+            if (res.data == 'email exists') {
+                setShowEmailAlert(true);
+            } else {
+                const userData = res.data;
+                window.localStorage.setItem('session-user', JSON.stringify(userData))
+                setCurrentUser(userData)
+                navigate('/redirect/profile')
+            }
         });
        }
     }
@@ -92,6 +98,7 @@ const Login = () => {
                         <input type="password" onChange={handleChange} name="confirmPassword"></input>
                         <button type="submit">Sign Up</button>
                         <Alert show={showSignupAlert} onClose={() => setShowSignupAlert(false)} dismissible variant='danger'>Passwords don't match. Try again!</Alert>
+                        <Alert show={showEmailAlert} onClose={() => setShowEmailAlert(false)}dismissible variant='danger'>Existing email with account. Try <a onClick={() => setShowModal(false)}>logging in</a>?</Alert>
                     </form>
                 </Modal.Body>
             </Modal>

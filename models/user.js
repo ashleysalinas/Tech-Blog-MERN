@@ -24,7 +24,6 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-        //hash password later https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
     },
 })
 
